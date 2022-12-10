@@ -37,9 +37,9 @@ for r in range(height):
         # r, c is where currently drawing pixel
         visable = actualX in sprite_poss
         if visable:
-            print("X", end="")
+            print("🟦", end="")
         else:
-            print(".", end="")
+            print("⬜", end="")
     print()
 # for c in care:
 #     total += logs[c - 1] * c
