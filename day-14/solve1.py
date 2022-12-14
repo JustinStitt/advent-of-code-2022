@@ -2,7 +2,7 @@ import sys
 
 lines = [line.rstrip() for line in sys.stdin.readlines()]
 
-ROWS = 10000
+ROWS = 10_000
 COLS = 10_000
 AIR = 0
 ROCK = 1
@@ -10,37 +10,14 @@ SAND = 2
 cave = [[AIR for _ in range(ROWS)] for __ in range(COLS)]
 
 
-def getAllPointsOnLine(p1, p2):
-    x1, y1 = p1
-    x2, y2 = p2
-    points = []
-    isSteep = abs(y2 - y1) > abs(x2 - x1)
-    if isSteep:
-        x1, y1 = y1, x1
-        x2, y2 = y2, x2
-    swapped = False
-    if x1 > x2:
-        x1, x2 = x2, x1
-        y1, y2 = y2, y1
-        swapped = True
-    dx = x2 - x1
-    dy = y2 - y1
-    error = int(dx / 2.0)
-    ystep = 1 if y1 < y2 else -1
-    y = y1
-    for x in range(x1, x2 + 1):
-        coord = (y, x) if isSteep else (x, y)
-        points.append(coord)
-        error -= abs(dy)
-        if error < 0:
-            y += ystep
-            error += dx
-    if swapped:
-        points.reverse()
-    return points
+def getAllPointsBetweenPoints(p1, p2):
+    x1, y1, x2, y2 = [*p1, *p2]
+    if x1 == x2:
+        return [[x1, yy] for yy in range(y1, y2, 1 if y2 > y1 else -1)] + [p2]
+    elif y1 == y2:
+        return [[xx, y1] for xx in range(x1, x2, 1 if x2 > x1 else -1)] + [p2]
+    return []
 
-
-DROP_LOC = 500
 
 num_sand_dropped = 0
 
@@ -82,7 +59,7 @@ for line in lines:
         f, s = sp[idx : idx + 2]
         p1 = [int(x) for x in f.split(",")[::-1]]
         p2 = [int(x) for x in s.split(",")[::-1]]
-        all_in_line = getAllPointsOnLine(p1, p2)
+        all_in_line = getAllPointsBetweenPoints(p1, p2)
         for p in all_in_line:
             r, c = p
             highest_y = max(highest_y, r)
