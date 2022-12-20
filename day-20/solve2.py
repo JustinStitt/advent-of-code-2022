@@ -40,7 +40,7 @@ def printList(strt: Node):
 def insertAfter(to_add: Node, offset: int):
     global dummy, added, indices, nodes
     sign = 1 if offset > 0 else -1
-    offset = abs(offset) % (len(nodes) - 1)  # minus dummy node
+    offset = abs(offset) % (len(nodes) - 2)  # minus dummy node
     offset *= sign
     # print(f"{offset=}, {to_add.data=}, {to_add.data % len(nodes)=}")
     curr = to_add
@@ -81,13 +81,12 @@ def deleteNode(node: Node):
 # print(nodes)
 # printList(dummy)
 print("Initial: ")
-printList(dummy)
+# printList(dummy)
 for i in range(10):
     print(f"Mix {i}:")
     for (idx, node) in enumerate(nodes[1:]):
         insertAfter(node, node.data if node.data > 0 else node.data - 1)
-        printList(dummy)
-    break
+        # printList(dummy)
 
 
 def findZero():
