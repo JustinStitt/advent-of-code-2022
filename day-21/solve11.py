@@ -48,8 +48,8 @@ for line in lines:
         monkeys[name] = nm
 
 root = monkeys["root"]
-root.op = "="  # pt 2 adjustment
+# root.op = "="  # pt 2 adjustment
 root.solve()
-print(root.number)
+print(int(root.number))
 # for (n, m) in monkeys.items():
 #     print(f"{n}: {m}")
