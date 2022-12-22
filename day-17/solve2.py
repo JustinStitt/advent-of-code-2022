@@ -100,7 +100,10 @@ def solve(sidx):
             # smallest here
             # print(f"{new_points=}")
             local_highest = sorted(new_points, key=lambda x: x[0])[0][0]
-            START_R = min(START_R, local_highest - 5)
+            nh = local_highest - 5
+            height_diff = START_R - nh
+            diffs.append(height_diff)
+            START_R = min(START_R, nh)
             # print(f"{START_R=}")
             break
         points = new_points
@@ -110,14 +113,34 @@ def solve(sidx):
     return True
 
 
+big = 1000000000000
+diffs = []
+cycle_len = 16
+
 if __name__ == "__main__":
     sidx = 0
     count = 2022
     while 1:
         if count == 0:
             break
-        at_rest = solve(sidx)
+        solve(sidx)
+        n = len(diffs)
         sidx = (sidx + 1) % 5
         count -= 1
-    # printCave()
+        # check for cycle from start
+        if n < cycle_len * 2:
+            continue
+        for i in range(0, n - cycle_len):
+            possible_cycle = diffs[i : i + cycle_len]
+            for k in range(i + cycle_len, n - cycle_len):
+                part = diffs[k : k + cycle_len]
+                # print(f"{possible_cycle=}, {part=}")
+                if possible_cycle == part:
+                    print(
+                        f"FOUND CYCLE! {possible_cycle=}, {part=}, {n=}, {diffs[-1]=}, {diffs=}"
+                    )
+                    exit(0)
+
     print(HEIGHT - START_R - 4)
+    # print(sum(diffs))
+    print(diffs)
