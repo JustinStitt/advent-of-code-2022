@@ -15,14 +15,6 @@ faces["bottom"] = [line[N * 2 : N * 3] for line in lines[N * 2 : N * 3]]
 faces["left"] = [line[N : N * 2] for line in lines[N : N * 2]]
 faces["right"] = [line[N * 3 :] for line in lines[N * 2 : N * 3]]
 faces["back"] = [line[:N] for line in lines[N : N * 2]]
-print(faces)
-for (k, v) in faces.items():
-    print(k)
-    for row in v:
-        for c in row:
-            print(c, end="")
-        print()
-exit(0)
 faces_debug = deepcopy(faces)
 debug_count = 0
 debug_hex = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ" * 5000
