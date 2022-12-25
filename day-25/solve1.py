@@ -25,29 +25,7 @@ class Node:
         self.data = data
         self.left = left
 
-
 def decToSnafu(dec):
-    # try right to left strat (seems weird)
-    base5 = numberToBase(dec, 5)
-    leftmost = []
-    for i in range(len(base5) - 1, -1, -1):
-        if base5[i] in (0, 1, 2):
-            continue
-        if base5[i] in (3, 4):
-            base5[i] = "-" if base5[i] == 4 else "="
-            if i - 1 < 0:
-                leftmost.append("1")
-                continue
-            base5[i - 1] += 1
-            curr = i - 1
-            while base5[curr] == 5:
-                base5[curr] = 0
-                base5[curr - 1] += 1
-
-    return leftmost + base5
-
-
-def decToSnafuTwo(dec):
     # try right to left strat (seems weird)
     base5 = numberToBase(dec, 5)
     prev = Node(base5[0])
@@ -116,7 +94,7 @@ for snafu in snafus:
     # print(f"{snafu=}, dec={snafuToDec(snafu)}")
 
 print(total)
-result = decToSnafuTwo(total)
+result = decToSnafu(total)
 for c in result:
     print(c, end="")
 print()
