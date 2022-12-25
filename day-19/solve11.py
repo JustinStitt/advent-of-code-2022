@@ -54,10 +54,10 @@ def bfs(bp: Blueprint):
             >= (S.time * (2 * S.robots[-1] + S.time - 1)) // 2
         ):
             continue
-        S.time -= 1
         if not seen[S.time]:
             print(f"At Time: {S.time}")
             seen[S.time] = True
+        S.time -= 1
         # print(f"{S=}")
         # check geode count against max
 
